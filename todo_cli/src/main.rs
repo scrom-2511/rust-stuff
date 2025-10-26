@@ -18,6 +18,7 @@ fn main() {
         match input {
             "addTodo" => add_todo(&mut todos),
             "viewTodo" => view_todo(&mut todos),
+            "removeTodo" => remove_todo(&mut todos),
             "break" => break,
             _ => println!("This command is unknown!"),
         }
@@ -40,10 +41,33 @@ fn add_todo(todos: &mut Vec<SingleTodo>) {
     todos.push(todo);
 }
 
-fn view_todo(todos: &mut Vec<SingleTodo>){
+fn view_todo(todos: &mut Vec<SingleTodo>) {
     println!("Your current todos are:");
 
-    for todo in todos{
-        println!("{} and it is {}", todo.description, if todo.done {"done"} else {"not done"});
+    for (i, todo) in todos.iter().enumerate() {
+        println!("{}", i+1);
+        print!(
+            "{} and it is {}",
+            todo.description,
+            if todo.done { "done" } else { "not done" }
+        );
+    }
+}
+
+fn remove_todo(todos: &mut Vec<SingleTodo>) {
+    println!("Which todo you want to remove");
+
+    let mut input = String::new();
+    stdin().read_line(&mut input).expect("Unable to read line");
+
+    let number: usize = match input.trim().parse() {
+        Ok(num) => num,
+        Err(_) => {
+            return;
+        }
+    };
+
+    if number < todos.len() {
+        todos.remove(number - 1 as usize);
     }
 }
