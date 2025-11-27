@@ -20,7 +20,7 @@ fn main() {
         };
 
         if guess == random_number {
-            println!("🎉 Your guess is correct!");
+            println!("Your guess is correct!");
             break;
         } else if guess < random_number {
             println!("Too small! Try again.");
